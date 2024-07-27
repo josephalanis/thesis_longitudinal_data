@@ -78,8 +78,8 @@ for (i in 1:500)  {
   
   #Step 2 creating missing values for scenario 
   
-  m1<-delete_MAR_censoring(newSRS,0.3,"BP1",cols_ctrl = "BP0")
-  m2<-delete_MAR_censoring(newSRS,0.5,"BP2",cols_ctrl = "BP0")
+  m1<-delete_MAR_censoring(newSRS,0.1,"BP1",cols_ctrl = "BP0")
+  m2<-delete_MAR_censoring(newSRS,0.2,"BP2",cols_ctrl = "BP0")
   
   BP1<-m1$BP1
   BP2<-m2$BP2
@@ -127,8 +127,8 @@ for (i in 1:500)  {
   #Step 6 - Bayesian Network (Method 2)
   
   # Need subset with only variables listed in dag1
-  dm2<-subset.data.frame(select(s2,-id))
-  dag1 = model2network("[Age][Trt][Sex][Error][BP0|Age:Sex:Error][BP1|BP0:Trt][BP2|BP0:Trt]")
+  dm2<-subset.data.frame(select(s2,-id,-Error))
+  dag1 = model2network("[Age][Trt][Sex][BP0|Age:Sex:Trt][BP1|BP0:Trt][BP2|BP0:Trt]")
   dfitted=bn.fit(dag1,dm2)
   
   incomplete=dm2
@@ -219,5 +219,5 @@ Table1<-data.frame(
 )
 
 #Output
-Table1
+View(Table1)
 
